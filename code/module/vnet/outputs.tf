@@ -42,3 +42,18 @@ output "private_endpoint_subnet_address_prefixes" {
   description = "Address prefixes assigned to the dedicated private-endpoint subnet."
   value       = azurerm_subnet.private_endpoints.address_prefixes
 }
+
+output "key_vault_private_dns_zone_id" {
+  description = "Resource ID of the Azure Key Vault private DNS zone."
+  value       = azurerm_private_dns_zone.key_vault.id
+}
+
+output "key_vault_private_dns_zone_name" {
+  description = "Name of the Azure Key Vault private DNS zone."
+  value       = azurerm_private_dns_zone.key_vault.name
+}
+
+output "key_vault_private_dns_zone_vnet_link_id" {
+  description = "Resource ID of the Azure Key Vault private DNS zone VNet link."
+  value       = azurerm_private_dns_zone_virtual_network_link.key_vault.id
+}

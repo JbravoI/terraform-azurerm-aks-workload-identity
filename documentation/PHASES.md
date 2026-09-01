@@ -115,26 +115,28 @@
 
 ## Phase 3 — Private connectivity and DNS foundation
 
+**Status:** Complete for code and documentation. Private endpoint creation and Key Vault public-network disablement remain Phase 4 work.
+
 **Goal:** Provide the reusable building blocks needed to connect private Azure services without public network access.
 
 ### Code
 
-- [ ] Create the private DNS zone required for Key Vault: `privatelink.vaultcore.azure.net`.
-- [ ] Link the private DNS zone to the VNet with `azurerm_private_dns_zone_virtual_network_link`.
-- [ ] Define a reusable private-endpoint interface or module contract: subnet ID, target resource ID, subresource names, DNS zone IDs, and tags.
-- [ ] Do not create a Key Vault private endpoint until the Key Vault exists in Phase 4.
+- [x] Create the private DNS zone required for Key Vault: `privatelink.vaultcore.azure.net`.
+- [x] Link the private DNS zone to the VNet with `azurerm_private_dns_zone_virtual_network_link`.
+- [x] Define a reusable private-endpoint interface or module contract: subnet ID, target resource ID, subresource names, DNS zone IDs, and tags.
+- [x] Do not create a Key Vault private endpoint until the Key Vault exists in Phase 4.
 
 ### Documentation
 
-- [ ] Add a private DNS and connectivity diagram.
-- [ ] Document name-resolution expectations for workload pods, nodes, and operator workstations.
-- [ ] Record an ADR for Azure Private DNS zone ownership and any hub-and-spoke integration boundary.
+- [x] Add a private DNS and connectivity diagram.
+- [x] Document name-resolution expectations for workload pods, nodes, and operator workstations.
+- [x] Record an ADR for Azure Private DNS zone ownership and any hub-and-spoke integration boundary.
 
 ### Exit criteria
 
-- A private DNS zone is linked to the intended VNet.
-- The module interface does not accept or expose secrets.
-- DNS ownership and integration assumptions are explicit.
+- [x] A private DNS zone is linked to the intended VNet.
+- [x] The module interface does not accept or expose secrets.
+- [x] DNS ownership and integration assumptions are explicit.
 
 ---
 
