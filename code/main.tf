@@ -46,5 +46,8 @@ module "aks" {
   node_max_count             = var.aks_node_max_count
   node_max_pods              = var.aks_node_max_pods
   log_analytics_workspace_id = var.aks_log_analytics_workspace_id
+  key_vault_id               = module.key_vault.id
+  workload_namespace         = var.workload_namespace
+  workload_service_account   = var.workload_service_account
   tags                       = local.tags
 }

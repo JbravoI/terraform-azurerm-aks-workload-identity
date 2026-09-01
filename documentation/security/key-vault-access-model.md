@@ -1,6 +1,6 @@
 # Key Vault Access Model
 
-**Phase:** 4 baseline. Phase 6 will add the runtime workload identity and its narrowly scoped Key Vault data-plane role.
+**Phase:** 6 baseline. The runtime workload identity and its narrowly scoped Key Vault data-plane role are configured; the Kubernetes service account and workload manifest follow in Phase 7.
 
 ## Authorisation model
 
@@ -10,7 +10,7 @@ The Key Vault has `rbac_authorization_enabled = true`. It has no access-policy b
 |---|---|---|---|
 | Terraform provisioning identity | Resource group/Key Vault management scope | Create and configure Azure resources; create future role assignments only when explicitly authorised. | Required for apply; exact role must be supplied by the environment. |
 | CI/CD identity | Plan/apply scope appropriate to its environment | Run reviewed Terraform using federated Azure identity; no long-lived client secret. | Deferred to Phase 8. |
-| AKS runtime workload identity | Key Vault scope and minimum data-plane role | Read only the intended object type for the sample workload. | Deferred to Phase 6. |
+| AKS runtime workload identity | Key Vault scope; Key Vault Secrets User | Read secret contents only for the sample workload. | Configured in Phase 6. |
 | Break-glass administrator | Time-bound, approved Key Vault/Azure role | Recover, investigate, or perform exceptional operations. | Environment-controlled; not assigned by this module. |
 
 ## Controls

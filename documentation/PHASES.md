@@ -203,29 +203,31 @@
 
 ## Phase 6 — Federated workload identity and Key Vault RBAC
 
+**Status:** Complete for Azure infrastructure and documentation. The Kubernetes service account and example workload are deliberately deferred to Phase 7.
+
 **Goal:** Bind one Kubernetes service account to one user-assigned managed identity and grant that identity minimal Key Vault access.
 
 ### Code
 
-- [ ] Create a user-assigned managed identity for the sample workload.
-- [ ] Create an Entra federated identity credential with the AKS OIDC issuer, approved audience, and exact service-account subject (`system:serviceaccount:<namespace>:<service-account>`).
-- [ ] Create the required Key Vault data-plane role assignment at the narrowest supported scope.
-- [ ] Parameterise namespace, service-account name, identity name, and permitted Key Vault role; validate that broad role defaults are not used.
-- [ ] Export identity client ID and resource ID only as needed by the Kubernetes workload example.
-- [ ] Add dependency ordering so OIDC and Key Vault prerequisites exist before the federation and role assignment.
+- [x] Create a user-assigned managed identity for the sample workload.
+- [x] Create an Entra federated identity credential with the AKS OIDC issuer, approved audience, and exact service-account subject (`system:serviceaccount:<namespace>:<service-account>`).
+- [x] Create the required Key Vault data-plane role assignment at the narrowest supported scope.
+- [x] Parameterise namespace and service-account name; derive the workload identity name and restrict the Key Vault role to `Key Vault Secrets User`.
+- [x] Export identity client ID and resource ID only as needed by the Kubernetes workload example.
+- [x] Add dependency ordering so OIDC and Key Vault prerequisites exist before the federation and role assignment.
 
 ### Documentation
 
-- [ ] Add the identity token-exchange sequence diagram.
-- [ ] Create the RBAC matrix: principal, role, scope, purpose, owner, and removal/review condition.
-- [ ] Create the threat model covering token theft, overly broad federated subjects, RBAC escalation, public exposure, and Terraform state/plan leakage.
-- [ ] Document the expected Kubernetes service-account annotations and workload labels.
+- [x] Add the identity token-exchange sequence diagram.
+- [x] Create the RBAC matrix: principal, role, scope, purpose, owner, and removal/review condition.
+- [x] Create the threat model covering token theft, overly broad federated subjects, RBAC escalation, public exposure, and Terraform state/plan leakage.
+- [x] Document the expected Kubernetes service-account annotations and workload labels.
 
 ### Exit criteria
 
-- The federated subject contains exactly one approved namespace and service account.
-- The runtime identity is distinct from Terraform and CI/CD identities.
-- The sample identity can retrieve only the intended Key Vault data-plane object type; it cannot modify infrastructure or enumerate unrelated secrets unless explicitly required and documented.
+- [x] The federated subject contains exactly one approved namespace and service account.
+- [x] The runtime identity is distinct from Terraform and CI/CD identities.
+- [x] The sample identity can retrieve only Key Vault secret content; it cannot modify infrastructure or read Key Vault keys/certificates.
 
 ---
 

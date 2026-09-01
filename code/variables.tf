@@ -205,6 +205,30 @@ variable "aks_log_analytics_workspace_id" {
   nullable    = true
 }
 
+variable "workload_namespace" {
+  description = "Kubernetes namespace trusted by the workload identity federated credential."
+  type        = string
+  default     = "workload-identity"
+  nullable    = false
+
+  validation {
+    condition     = can(regex("^[a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?$", var.workload_namespace)) && length(var.workload_namespace) >= 1
+    error_message = "workload_namespace must be a 1-63 character lowercase Kubernetes DNS label."
+  }
+}
+
+variable "workload_service_account" {
+  description = "Kubernetes service account trusted by the workload identity federated credential."
+  type        = string
+  default     = "keyvault-reader"
+  nullable    = false
+
+  validation {
+    condition     = can(regex("^[a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?$", var.workload_service_account)) && length(var.workload_service_account) >= 1
+    error_message = "workload_service_account must be a 1-63 character lowercase Kubernetes DNS label."
+  }
+}
+
 variable "tags" {
   description = "Additional tags applied to resources managed by this configuration."
   type        = map(string)

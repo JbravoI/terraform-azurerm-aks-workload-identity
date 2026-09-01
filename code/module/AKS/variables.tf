@@ -20,6 +20,10 @@ variable "log_analytics_workspace_id" {
   nullable = true
 }
 
+variable "key_vault_id" { type = string }
+variable "workload_namespace" { type = string }
+variable "workload_service_account" { type = string }
+
 variable "tags" {
   type    = map(string)
   default = {}

@@ -12,6 +12,15 @@ resource "azurerm_user_assigned_identity" "kubelet" {
   tags                = var.tags
 }
 
+# This identity is for one application workload, not AKS control-plane or
+# kubelet operations. Its federation is limited to one service-account subject.
+resource "azurerm_user_assigned_identity" "workload" {
+  name                = "${var.name}-wi-mi"
+  location            = var.location
+  resource_group_name = var.resource_group_name
+  tags                = var.tags
+}
+
 # The control-plane identity must be able to join and manage NIC/IP resources
 # in the AKS node subnet before the cluster is created.
 resource "azurerm_role_assignment" "control_plane_network_contributor" {
@@ -95,4 +104,21 @@ resource "azurerm_kubernetes_cluster" "aks" {
     azurerm_role_assignment.control_plane_network_contributor,
     azurerm_role_assignment.control_plane_kubelet_identity_operator,
   ]
+}
+
+resource "azurerm_federated_identity_credential" "workload" {
+  name                = "${var.name}-kv-fic"
+  resource_group_name = var.resource_group_name
+  audience            = ["api://AzureADTokenExchange"]
+  issuer              = azurerm_kubernetes_cluster.aks.oidc_issuer_url
+  parent_id           = azurerm_user_assigned_identity.workload.id
+  subject             = "system:serviceaccount:${var.workload_namespace}:${var.workload_service_account}"
+}
+
+# This grants secret read content only. It does not allow infrastructure
+# changes, RBAC management, or Key Vault key/certificate operations.
+resource "azurerm_role_assignment" "workload_key_vault_secrets_user" {
+  scope                = var.key_vault_id
+  role_definition_name = "Key Vault Secrets User"
+  principal_id         = azurerm_user_assigned_identity.workload.principal_id
 }

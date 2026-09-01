@@ -107,3 +107,28 @@ output "aks_kubelet_identity_client_id" {
   description = "Client ID of the dedicated kubelet user-assigned managed identity."
   value       = module.aks.kubelet_identity_client_id
 }
+
+output "workload_identity_id" {
+  description = "Resource ID of the workload user-assigned managed identity."
+  value       = module.aks.workload_identity_id
+}
+
+output "workload_identity_client_id" {
+  description = "Client ID to annotate on the trusted Kubernetes service account."
+  value       = module.aks.workload_identity_client_id
+}
+
+output "workload_identity_principal_id" {
+  description = "Principal ID of the workload user-assigned managed identity."
+  value       = module.aks.workload_identity_principal_id
+}
+
+output "workload_federated_identity_credential_id" {
+  description = "Resource ID of the federated workload identity credential."
+  value       = module.aks.workload_federated_identity_credential_id
+}
+
+output "workload_service_account_subject" {
+  description = "Exact Kubernetes service-account subject trusted by the federated credential."
+  value       = module.aks.workload_service_account_subject
+}

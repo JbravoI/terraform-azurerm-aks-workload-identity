@@ -32,3 +32,28 @@ output "kubelet_identity_client_id" {
   description = "Client ID of the dedicated kubelet user-assigned managed identity."
   value       = azurerm_user_assigned_identity.kubelet.client_id
 }
+
+output "workload_identity_id" {
+  description = "Resource ID of the workload user-assigned managed identity."
+  value       = azurerm_user_assigned_identity.workload.id
+}
+
+output "workload_identity_client_id" {
+  description = "Client ID to annotate on the trusted Kubernetes service account."
+  value       = azurerm_user_assigned_identity.workload.client_id
+}
+
+output "workload_identity_principal_id" {
+  description = "Principal ID of the workload user-assigned managed identity."
+  value       = azurerm_user_assigned_identity.workload.principal_id
+}
+
+output "workload_federated_identity_credential_id" {
+  description = "Resource ID of the federated credential binding the workload identity to the Kubernetes service account."
+  value       = azurerm_federated_identity_credential.workload.id
+}
+
+output "workload_service_account_subject" {
+  description = "Exact Kubernetes service-account subject trusted by the federated credential."
+  value       = azurerm_federated_identity_credential.workload.subject
+}
