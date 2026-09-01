@@ -57,3 +57,23 @@ output "key_vault_private_dns_zone_vnet_link_id" {
   description = "Resource ID of the Azure Key Vault private DNS zone VNet link."
   value       = module.vnet.key_vault_private_dns_zone_vnet_link_id
 }
+
+output "key_vault_id" {
+  description = "Resource ID of the Key Vault."
+  value       = module.key_vault.id
+}
+
+output "key_vault_name" {
+  description = "Name of the Key Vault."
+  value       = module.key_vault.name
+}
+
+output "key_vault_uri" {
+  description = "Data-plane URI of the Key Vault. Access is private-only."
+  value       = module.key_vault.uri
+}
+
+output "key_vault_private_endpoint_id" {
+  description = "Resource ID of the Key Vault private endpoint."
+  value       = module.key_vault.private_endpoint_id
+}

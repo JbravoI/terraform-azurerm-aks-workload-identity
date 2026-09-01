@@ -53,6 +53,36 @@ variable "private_endpoint_subnet_address_prefixes" {
   }
 }
 
+variable "key_vault_name" {
+  description = "Globally unique name for the Azure Key Vault. It must be 3-24 lowercase characters, start with a letter, end with a letter or number, and contain no consecutive hyphens."
+  type        = string
+  nullable    = false
+
+  validation {
+    condition     = can(regex("^[a-z][a-z0-9-]{1,22}[a-z0-9]$", var.key_vault_name)) && !strcontains(var.key_vault_name, "--")
+    error_message = "key_vault_name must be 3-24 lowercase characters, start with a letter, end with a letter or number, and contain no consecutive hyphens."
+  }
+}
+
+variable "key_vault_soft_delete_retention_days" {
+  description = "Number of days that deleted Key Vault resources remain recoverable. This value is immutable after vault creation."
+  type        = number
+  default     = 90
+  nullable    = false
+
+  validation {
+    condition     = var.key_vault_soft_delete_retention_days >= 7 && var.key_vault_soft_delete_retention_days <= 90
+    error_message = "key_vault_soft_delete_retention_days must be between 7 and 90."
+  }
+}
+
+variable "is_manual_private_endpoint_connection" {
+  description = "Whether the Key Vault private endpoint requires approval by a separately managed target-resource owner."
+  type        = bool
+  default     = false
+  nullable    = false
+}
+
 variable "tags" {
   description = "Additional tags applied to resources managed by this configuration."
   type        = map(string)

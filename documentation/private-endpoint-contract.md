@@ -1,10 +1,10 @@
 # Private Endpoint Contract
 
-**Status:** Defined in Phase 3; first implementation is deferred to the Key Vault module in Phase 4.
+**Status:** Implemented by `code/module/Keyvault/` in Phase 4.
 
 ## Purpose
 
-This contract standardises private endpoint inputs so the Key Vault private endpoint can be implemented without hard-coding VNet, subnet, or DNS details. It is intentionally not a resource yet: no Azure private endpoint is created until the target Key Vault exists.
+This contract standardises private endpoint inputs so the Key Vault private endpoint can be implemented without hard-coding VNet, subnet, or DNS details. The first implementation is in `code/module/Keyvault/` and creates an Azure Key Vault private endpoint only after creating its target Key Vault.
 
 ## Required interface
 

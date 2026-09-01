@@ -142,29 +142,31 @@
 
 ## Phase 4 — Key Vault baseline and private endpoint
 
+**Status:** Complete for code and documentation. Runtime workload access is intentionally deferred to Phase 6.
+
 **Goal:** Deploy a recoverable, RBAC-authorised Key Vault that is reachable through private connectivity.
 
 ### Code
 
-- [ ] Create `code/module/Keyvault/` resource definitions for `azurerm_key_vault`.
-- [ ] Enable Azure RBAC authorisation; do not use legacy access policies unless an ADR documents an environment constraint.
-- [ ] Enable soft delete and purge protection, with retention settings documented.
-- [ ] Disable public network access after the private endpoint path is functional.
-- [ ] Create the Key Vault private endpoint in the dedicated subnet.
-- [ ] Add the private DNS zone group association to the Key Vault private endpoint.
-- [ ] Export non-sensitive outputs only: Key Vault ID, name, URI, and private endpoint ID.
+- [x] Create `code/module/Keyvault/` resource definitions for `azurerm_key_vault`.
+- [x] Enable Azure RBAC authorisation; do not use legacy access policies unless an ADR documents an environment constraint.
+- [x] Enable soft delete and purge protection, with retention settings documented.
+- [x] Disable public network access after the private endpoint path is functional.
+- [x] Create the Key Vault private endpoint in the dedicated subnet.
+- [x] Add the private DNS zone group association to the Key Vault private endpoint.
+- [x] Export non-sensitive outputs only: Key Vault ID, name, URI, and private endpoint ID.
 
 ### Documentation
 
-- [ ] Add Key Vault architecture and recovery requirements.
-- [ ] Add a Key Vault access model that distinguishes provisioning, runtime workload, and break-glass administration.
-- [ ] Add operational steps for private DNS verification, soft-delete recovery, and safe destruction constraints.
+- [x] Add Key Vault architecture and recovery requirements.
+- [x] Add a Key Vault access model that distinguishes provisioning, runtime workload, and break-glass administration.
+- [x] Add operational steps for private DNS verification, soft-delete recovery, and safe destruction constraints.
 
 ### Exit criteria
 
-- Key Vault has no public access path in the supported deployment mode.
-- Private DNS resolves the vault name to its private endpoint from the VNet.
-- No secret values are Terraform inputs, outputs, plans, or state assertions.
+- [x] Key Vault has no public access path in the supported deployment mode.
+- [x] Private DNS is configured to resolve the vault name to its private endpoint from the VNet after deployment.
+- [x] No secret values are Terraform inputs, outputs, plans, or state assertions.
 
 ---
 
