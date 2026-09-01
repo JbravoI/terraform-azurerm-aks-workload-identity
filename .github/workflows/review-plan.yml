@@ -1,0 +1,63 @@
+name: Approved Terraform review plan
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  plan:
+    name: Generate review plan
+    runs-on: ubuntu-latest
+    environment: review
+    defaults:
+      run:
+        shell: bash
+        working-directory: code
+    env:
+      ARM_USE_OIDC: true
+      ARM_USE_AZUREAD: true
+      ARM_CLIENT_ID: ${{ vars.AZURE_CLIENT_ID }}
+      ARM_TENANT_ID: ${{ vars.AZURE_TENANT_ID }}
+      ARM_SUBSCRIPTION_ID: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v4
+        with:
+          terraform_version: "1.14.3"
+          terraform_wrapper: false
+
+      - name: Authenticate to Azure with GitHub OIDC
+        uses: azure/login@v2
+        with:
+          client-id: ${{ vars.AZURE_CLIENT_ID }}
+          tenant-id: ${{ vars.AZURE_TENANT_ID }}
+          subscription-id: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Materialise review variables
+        env:
+          TF_REVIEW_TFVARS: ${{ secrets.TF_REVIEW_TFVARS }}
+        run: |
+          test -n "$TF_REVIEW_TFVARS" || { echo "TF_REVIEW_TFVARS environment secret is required." >&2; exit 1; }
+          printf '%s' "$TF_REVIEW_TFVARS" > terraform.tfvars
+
+      - name: Initialise Terraform
+        run: terraform init -backend=false -input=false
+
+      - name: Generate binary and JSON plans
+        run: |
+          terraform plan -input=false -out=tfplan
+          terraform show -json tfplan > tfplan.json
+
+      - name: Upload short-lived plan evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: terraform-review-plan
+          path: code/tfplan.json
+          retention-days: 7

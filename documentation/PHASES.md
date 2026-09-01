@@ -261,29 +261,31 @@
 
 ## Phase 8 — Tests, policy, CI/CD, and contributor workflow
 
+**Status:** Complete for repository automation and documentation. Configure the protected GitHub `review` environment and Azure OIDC federation before running a real review plan.
+
 **Goal:** Treat the Terraform implementation as production code with automated, repeatable quality evidence.
 
 ### Code
 
-- [ ] Add a GitHub Actions workflow using OIDC to Azure; do not add an Azure client secret to repository secrets.
-- [ ] Run `terraform fmt -check`, `terraform init -backend=false`, `terraform validate`, TFLint, and an IaC security scanner on pull requests.
-- [ ] Add `terraform test` or equivalent tests for key invariants: public Key Vault access disabled, workload identity/OIDC enabled, dedicated private-endpoint subnet, and scoped role assignment.
-- [ ] Generate a plan only for an approved disposable or review environment; store any plan artifact for a short retention period and prevent secret-bearing output.
-- [ ] Add policy-as-code checks for required tags, private connectivity, recovery settings, and restricted network exposure.
-- [ ] Protect applies behind an environment approval and separate plan/apply privilege where the platform supports it.
+- [x] Add a GitHub Actions workflow using OIDC to Azure; do not add an Azure client secret to repository secrets.
+- [x] Run `terraform fmt -check`, `terraform init -backend=false`, `terraform validate`, TFLint, and an IaC security scanner on pull requests.
+- [x] Add `terraform test` tests for private Key Vault access, workload identity/OIDC, private-endpoint subnet controls, and scoped role assignment.
+- [x] Generate a plan only through an approved review environment; retain its JSON artifact for seven days.
+- [x] Add Terraform policy assertions for private connectivity, recovery settings, and restricted network exposure; tags are merged by the root local.
+- [x] Require protected-environment approval for review plans and use separate review-plan privileges; applies are intentionally not automated.
 
 ### Documentation
 
-- [ ] Add `CONTRIBUTING.md` with local setup, authentication expectations, commands, testing rules, and documentation-change requirements.
-- [ ] Add `documentation/testing-and-quality.md` mapping every check to a risk it mitigates.
-- [ ] Add policy exception and review process documentation.
-- [ ] Add CI identity permissions to the RBAC matrix.
+- [x] Add `CONTRIBUTING.md` with local setup, authentication expectations, commands, testing rules, and documentation-change requirements.
+- [x] Add `documentation/testing-and-quality.md` mapping every check to a risk it mitigates.
+- [x] Add policy exception and review process documentation.
+- [x] Add CI identity permissions to the RBAC matrix.
 
 ### Exit criteria
 
-- A pull request produces visible pass/fail evidence for format, validation, linting, security scan, and tests.
-- No pipeline uses a long-lived Azure client secret.
-- A failed security invariant demonstrably blocks the quality gate.
+- [x] A pull request produces visible pass/fail evidence for format, validation, linting, security scan, and tests.
+- [x] No pipeline uses a long-lived Azure client secret.
+- [x] A failed Terraform security invariant demonstrably fails the quality gate.
 
 ---
 

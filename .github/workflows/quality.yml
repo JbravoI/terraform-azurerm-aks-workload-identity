@@ -1,0 +1,91 @@
+name: Terraform quality
+
+on:
+  pull_request:
+    paths:
+      - "code/**"
+      - "examples/**"
+      - ".github/workflows/**"
+  push:
+    branches: [main]
+    paths:
+      - "code/**"
+      - "examples/**"
+      - ".github/workflows/**"
+
+permissions:
+  contents: read
+
+jobs:
+  terraform:
+    name: Format, validate, and test
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v4
+        with:
+          terraform_version: "1.14.3"
+          terraform_wrapper: false
+
+      - name: Check Terraform formatting
+        run: terraform -chdir=code fmt -check -recursive
+
+      - name: Initialise root configuration
+        run: terraform -chdir=code init -backend=false -input=false
+
+      - name: Validate root configuration
+        run: terraform -chdir=code validate
+
+      - name: Run VNet module tests
+        run: |
+          terraform -chdir=code/module/vnet init -backend=false -input=false
+          terraform -chdir=code/module/vnet test
+
+      - name: Run Key Vault module tests
+        run: |
+          terraform -chdir=code/module/Keyvault init -backend=false -input=false
+          terraform -chdir=code/module/Keyvault test
+
+      - name: Run AKS module tests
+        run: |
+          terraform -chdir=code/module/AKS init -backend=false -input=false
+          terraform -chdir=code/module/AKS test
+
+  lint:
+    name: TFLint
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up TFLint
+        uses: terraform-linters/setup-tflint@v6
+
+      - name: Initialise TFLint plugins
+        run: tflint --init --config=code/.tflint.hcl
+
+      - name: Lint Terraform
+        run: tflint --chdir=code --recursive
+
+  iac-security:
+    name: Checkov IaC scan
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Scan Terraform and Kubernetes example
+        uses: bridgecrewio/checkov-action@v12
+        with:
+          directory: code,examples
+          framework: terraform,kubernetes
+          quiet: true
