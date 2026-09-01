@@ -1,4 +1,12 @@
 # Project planning strategy is maintained outside the delivery repository.
 STRATEGY.md
+
+# Terraform working files and potentially sensitive local state.
 .terraform
+*.tfstate
+*.tfstate.*
+crash.log
+crash.*.log
+*.tfvars
+*.tfvars.example
 .terraform.lock.hcl
