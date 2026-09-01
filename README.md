@@ -48,6 +48,7 @@ code/module/vnet/             Virtual network module
 code/module/AKS/              Reserved for the AKS module
 code/module/Keyvault/         Reserved for the Key Vault module
 documentation/                Architecture, security, operations, ADRs, and release docs
+examples/basic-key-vault-access/  Private-cluster workload-identity verification example
 .github/workflows/            CI validation and release workflows
 ```
 

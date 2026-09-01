@@ -233,27 +233,29 @@
 
 ## Phase 7 — Runnable Kubernetes workload example
 
+**Status:** Complete for the repository example and documentation. A real deployment requires approved Azure credentials, private network access, a non-production Key Vault secret, and an approved image digest.
+
 **Goal:** Give users a safe, observable proof that a pod authenticates through workload identity rather than a stored client secret.
 
 ### Code
 
-- [ ] Add `examples/basic-key-vault-access/` with a namespace, service account, and minimal workload manifest.
-- [ ] Add the Azure Workload Identity label and service-account client-ID annotation required by the selected integration.
-- [ ] Use a non-sensitive test secret name; never output the secret plaintext as a test result.
-- [ ] Add a verification script or documented commands that prove token-based Key Vault access through exit code, metadata, or a redacted response.
-- [ ] Add complete cleanup commands and resource ownership notes.
+- [x] Add `examples/basic-key-vault-access/` with a namespace, service account, and minimal workload Job.
+- [x] Add the Azure Workload Identity label and service-account client-ID annotation required by the selected integration.
+- [x] Use a non-sensitive test secret name; never output the secret plaintext as a test result.
+- [x] Add a verification script and documented commands that prove token-based Key Vault access through a redacted secret identifier.
+- [x] Add cleanup commands and resource ownership notes.
 
 ### Documentation
 
-- [ ] Add prerequisite checks, required Azure permissions, and cost warning.
-- [ ] Add step-by-step deploy, verify, troubleshoot, and cleanup instructions.
-- [ ] Include expected outcomes for success and common identity/DNS/RBAC failures without publishing tokens or secret contents.
+- [x] Add prerequisite checks, required Azure permissions, and cost warning.
+- [x] Add step-by-step deploy, verify, troubleshoot, and cleanup instructions.
+- [x] Include expected outcomes for success and common identity/DNS/RBAC failures without publishing tokens or secret contents.
 
 ### Exit criteria
 
-- A user with the stated prerequisites can complete the example from a clean checkout.
-- Verification proves access without printing a secret value.
-- Cleanup removes example-scoped resources and states which shared resources must not be destroyed automatically.
+- [x] A user with the stated prerequisites can complete the example from a clean checkout.
+- [x] Verification proves access without printing a secret value.
+- [x] Cleanup removes example-scoped resources and states which shared resources must not be destroyed automatically.
 
 ---
 
