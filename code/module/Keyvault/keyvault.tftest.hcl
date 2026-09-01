@@ -16,17 +16,17 @@ run "enforces_private_recoverable_key_vault" {
   }
 
   assert {
-    condition     = azurerm_key_vault.this.rbac_authorization_enabled && azurerm_key_vault.this.purge_protection_enabled
+    condition     = azurerm_key_vault.key_vault.rbac_authorization_enabled && azurerm_key_vault.key_vault.purge_protection_enabled
     error_message = "The Key Vault must use Azure RBAC and purge protection."
   }
 
   assert {
-    condition     = azurerm_key_vault.this.public_network_access_enabled == false && azurerm_key_vault.this.network_acls[0].default_action == "Deny"
+    condition     = azurerm_key_vault.key_vault.public_network_access_enabled == false && azurerm_key_vault.key_vault.network_acls[0].default_action == "Deny"
     error_message = "The Key Vault must deny public data-plane access."
   }
 
   assert {
-    condition     = azurerm_private_endpoint.key_vault.private_service_connection[0].subresource_names == ["vault"]
+    condition     = length(azurerm_private_endpoint.key_vault.private_service_connection[0].subresource_names) == 1 && contains(azurerm_private_endpoint.key_vault.private_service_connection[0].subresource_names, "vault")
     error_message = "The private endpoint must target the Key Vault vault subresource."
   }
 }
