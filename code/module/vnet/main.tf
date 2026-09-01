@@ -1,6 +1,6 @@
 # This module intentionally contains only the virtual network. Subnets are
 # separate resources because AKS and private endpoints require distinct controls.
-resource "azurerm_virtual_network" "this" {
+resource "azurerm_virtual_network" "vnet" {
   name                = local.vnet_name
   location            = var.location
   resource_group_name = var.resource_group_name

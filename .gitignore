@@ -1,2 +1,4 @@
 # Project planning strategy is maintained outside the delivery repository.
 STRATEGY.md
+.terraform
+.terraform.lock.hcl
