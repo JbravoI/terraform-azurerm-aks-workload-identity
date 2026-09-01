@@ -31,6 +31,28 @@ variable "vnet_address_space" {
   }
 }
 
+variable "aks_subnet_address_prefixes" {
+  description = "IPv4 CIDR ranges for the dedicated AKS node subnet. These ranges must be contained by vnet_address_space and not overlap another subnet or AKS service/pod ranges."
+  type        = list(string)
+  nullable    = false
+
+  validation {
+    condition     = length(var.aks_subnet_address_prefixes) > 0 && alltrue([for cidr in var.aks_subnet_address_prefixes : can(cidrnetmask(cidr))])
+    error_message = "aks_subnet_address_prefixes must contain one or more valid IPv4 CIDR blocks."
+  }
+}
+
+variable "private_endpoint_subnet_address_prefixes" {
+  description = "IPv4 CIDR ranges for the dedicated private-endpoint subnet. These ranges must be contained by vnet_address_space and not overlap another subnet or AKS service/pod ranges."
+  type        = list(string)
+  nullable    = false
+
+  validation {
+    condition     = length(var.private_endpoint_subnet_address_prefixes) > 0 && alltrue([for cidr in var.private_endpoint_subnet_address_prefixes : can(cidrnetmask(cidr))])
+    error_message = "private_endpoint_subnet_address_prefixes must contain one or more valid IPv4 CIDR blocks."
+  }
+}
+
 variable "tags" {
   description = "Additional tags applied to resources managed by this configuration."
   type        = map(string)

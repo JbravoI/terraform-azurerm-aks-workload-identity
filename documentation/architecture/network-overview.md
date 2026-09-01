@@ -12,14 +12,12 @@ The virtual network is the private network boundary for the AKS workload-identit
 ```text
 Existing Azure resource group
 └── Virtual network: <name_prefix>-vnet
-    └── Address space: var.vnet_address_space
-
-Planned in Phase 2
-├── AKS node subnet
-└── Private-endpoint subnet
+└── Address space: var.vnet_address_space
+    ├── AKS node subnet: var.aks_subnet_address_prefixes
+    └── Private-endpoint subnet: var.private_endpoint_subnet_address_prefixes
 ```
 
-No subnets are defined inline in the VNet. This prevents future standalone `azurerm_subnet` resources from conflicting with VNet configuration and lets AKS and private endpoints receive separate policy controls.
+No subnets are defined inline in the VNet. This prevents standalone `azurerm_subnet` resources from conflicting with VNet configuration and lets AKS and private endpoints receive separate policy controls. The detailed subnet design is in [Subnet Design](subnet-design.md).
 
 ## Inputs and naming
 

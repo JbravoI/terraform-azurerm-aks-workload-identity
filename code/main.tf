@@ -4,9 +4,11 @@
 module "vnet" {
   source = "./module/vnet"
 
-  name_prefix         = var.name_prefix
-  resource_group_name = var.resource_group_name
-  location            = var.location
-  address_space       = var.vnet_address_space
-  tags                = local.tags
+  name_prefix                              = var.name_prefix
+  resource_group_name                      = var.resource_group_name
+  location                                 = var.location
+  address_space                            = var.vnet_address_space
+  aks_subnet_address_prefixes              = var.aks_subnet_address_prefixes
+  private_endpoint_subnet_address_prefixes = var.private_endpoint_subnet_address_prefixes
+  tags                                     = local.tags
 }

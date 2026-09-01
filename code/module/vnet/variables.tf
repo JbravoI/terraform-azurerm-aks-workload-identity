@@ -22,6 +22,18 @@ variable "address_space" {
   nullable    = false
 }
 
+variable "aks_subnet_address_prefixes" {
+  description = "IPv4 CIDR ranges for the dedicated AKS node subnet."
+  type        = list(string)
+  nullable    = false
+}
+
+variable "private_endpoint_subnet_address_prefixes" {
+  description = "IPv4 CIDR ranges for the dedicated private-endpoint subnet."
+  type        = list(string)
+  nullable    = false
+}
+
 variable "tags" {
   description = "Tags applied to the virtual network."
   type        = map(string)

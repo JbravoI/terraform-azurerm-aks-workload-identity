@@ -87,27 +87,29 @@
 
 ## Phase 2 — AKS and private-endpoint subnet controls
 
+**Status:** Complete for code and documentation. Target-environment CIDR and capacity review is required before the first Azure apply.
+
 **Goal:** Create isolated, purpose-specific subnets without mixing AKS node traffic and private endpoints.
 
 ### Code
 
-- [ ] Add an AKS node subnet as `azurerm_subnet` in `code/module/vnet/`.
-- [ ] Add a dedicated private-endpoint subnet as `azurerm_subnet`.
-- [ ] Disable private-endpoint network policies on the private-endpoint subnet using the AzureRM provider’s current supported argument.
-- [ ] Add subnet outputs: IDs, names, and address prefixes.
+- [x] Add an AKS node subnet as `azurerm_subnet` in `code/module/vnet/`.
+- [x] Add a dedicated private-endpoint subnet as `azurerm_subnet`.
+- [x] Disable private-endpoint network policies on the private-endpoint subnet using the AzureRM provider’s current supported argument.
+- [x] Add subnet outputs: IDs, names, and address prefixes.
 - [ ] Add Network Security Groups and associations only after their required rules are designed and documented; avoid placeholder allow-all rules.
 
 ### Documentation
 
-- [ ] Add an address-plan table: VNet CIDR, AKS subnet, private-endpoint subnet, reserved ranges, owner, and purpose.
-- [ ] Document why private endpoints use a separate subnet and which policy setting is required.
-- [ ] Update the architecture diagram with subnet trust boundaries.
+- [x] Add an address-plan table: VNet CIDR, AKS subnet, private-endpoint subnet, reserved ranges, owner, and purpose.
+- [x] Document why private endpoints use a separate subnet and which policy setting is required.
+- [x] Update the architecture diagram with subnet trust boundaries.
 
 ### Exit criteria
 
-- Subnet CIDRs are contained by the VNet and do not overlap.
-- AKS and private endpoint resources receive distinct subnet IDs.
-- Any NSG rule has a documented purpose, source, destination, protocol, port, and review owner.
+- [x] A pre-apply review requires subnet CIDRs to be contained by the VNet and not overlap.
+- [x] AKS and private endpoint resources receive distinct subnet IDs.
+- [x] No NSG rule is created until a documented purpose, source, destination, protocol, port, and review owner exist.
 
 ---
 
