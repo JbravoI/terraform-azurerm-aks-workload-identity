@@ -43,10 +43,12 @@ Cluster provisioning, multi-tenancy, GitOps, ingress, observability bundles, and
 ## Planned repository layout
 
 ```text
-module/                       Terraform module source
-examples/basic-key-vault-access/
-documentation/               Architecture, security, operations, ADRs, and release docs
-.github/workflows/           CI validation and release workflows
+code/                         Root Terraform configuration
+code/module/vnet/             Virtual network module
+code/module/AKS/              Reserved for the AKS module
+code/module/Keyvault/         Reserved for the Key Vault module
+documentation/                Architecture, security, operations, ADRs, and release docs
+.github/workflows/            CI validation and release workflows
 ```
 
 ## Security principles
