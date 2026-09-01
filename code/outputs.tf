@@ -77,3 +77,33 @@ output "key_vault_private_endpoint_id" {
   description = "Resource ID of the Key Vault private endpoint."
   value       = module.key_vault.private_endpoint_id
 }
+
+output "aks_id" {
+  description = "Resource ID of the AKS cluster."
+  value       = module.aks.id
+}
+
+output "aks_name" {
+  description = "Name of the AKS cluster."
+  value       = module.aks.name
+}
+
+output "aks_oidc_issuer_url" {
+  description = "OIDC issuer URL used to create federated workload-identity credentials."
+  value       = module.aks.oidc_issuer_url
+}
+
+output "aks_control_plane_identity_id" {
+  description = "Resource ID of the AKS control-plane user-assigned managed identity."
+  value       = module.aks.control_plane_identity_id
+}
+
+output "aks_kubelet_identity_id" {
+  description = "Resource ID of the dedicated kubelet user-assigned managed identity."
+  value       = module.aks.kubelet_identity_id
+}
+
+output "aks_kubelet_identity_client_id" {
+  description = "Client ID of the dedicated kubelet user-assigned managed identity."
+  value       = module.aks.kubelet_identity_client_id
+}

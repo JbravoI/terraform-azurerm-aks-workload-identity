@@ -83,6 +83,128 @@ variable "is_manual_private_endpoint_connection" {
   nullable    = false
 }
 
+variable "aks_name" {
+  description = "Name of the AKS cluster."
+  type        = string
+  nullable    = false
+
+  validation {
+    condition     = can(regex("^[a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?$", var.aks_name)) && length(var.aks_name) >= 3
+    error_message = "aks_name must be 3-63 characters, start and end with a lowercase letter or number, and contain only lowercase letters, numbers, and hyphens."
+  }
+}
+
+variable "aks_dns_prefix" {
+  description = "DNS prefix for the AKS cluster."
+  type        = string
+  nullable    = false
+
+  validation {
+    condition     = can(regex("^[a-z0-9-]+$", var.aks_dns_prefix)) && length(var.aks_dns_prefix) <= 54
+    error_message = "aks_dns_prefix must contain only lowercase letters, numbers, and hyphens and be 54 characters or fewer."
+  }
+}
+
+variable "aks_kubernetes_version" {
+  description = "AKS Kubernetes version. Use a version currently supported in the selected Azure region."
+  type        = string
+  nullable    = false
+
+  validation {
+    condition     = can(regex("^[0-9]+\\.[0-9]+(\\.[0-9]+)?$", var.aks_kubernetes_version))
+    error_message = "aks_kubernetes_version must be a Kubernetes version such as 1.36 or 1.36.2."
+  }
+}
+
+variable "aks_admin_group_object_ids" {
+  description = "Microsoft Entra group object IDs granted Azure RBAC administrator access to the AKS cluster."
+  type        = list(string)
+  nullable    = false
+
+  validation {
+    condition     = length(var.aks_admin_group_object_ids) > 0
+    error_message = "aks_admin_group_object_ids must contain at least one approved Microsoft Entra administrator group object ID."
+  }
+}
+
+variable "aks_pod_cidr" {
+  description = "Non-overlapping IPv4 CIDR used by Azure CNI Overlay for pod addresses."
+  type        = string
+  nullable    = false
+
+  validation {
+    condition     = can(cidrnetmask(var.aks_pod_cidr))
+    error_message = "aks_pod_cidr must be a valid IPv4 CIDR block."
+  }
+}
+
+variable "aks_service_cidr" {
+  description = "Non-overlapping IPv4 CIDR used by Kubernetes services. It must be smaller than /12."
+  type        = string
+  nullable    = false
+
+  validation {
+    condition     = can(cidrnetmask(var.aks_service_cidr))
+    error_message = "aks_service_cidr must be a valid IPv4 CIDR block."
+  }
+}
+
+variable "aks_dns_service_ip" {
+  description = "Kubernetes DNS service IP. It must be inside aks_service_cidr and not the first address; verify this before apply."
+  type        = string
+  nullable    = false
+
+  validation {
+    condition     = can(cidrhost("${var.aks_dns_service_ip}/32", 0))
+    error_message = "aks_dns_service_ip must be a valid IPv4 address."
+  }
+}
+
+variable "aks_node_vm_size" {
+  description = "Azure VM size for the AKS system node pool."
+  type        = string
+  default     = "Standard_D2s_v5"
+  nullable    = false
+}
+
+variable "aks_node_min_count" {
+  description = "Minimum autoscaling node count for the AKS system node pool."
+  type        = number
+  default     = 1
+  nullable    = false
+}
+
+variable "aks_node_max_count" {
+  description = "Maximum autoscaling node count for the AKS system node pool."
+  type        = number
+  default     = 3
+  nullable    = false
+
+  validation {
+    condition     = var.aks_node_max_count >= var.aks_node_min_count
+    error_message = "aks_node_max_count must be greater than or equal to aks_node_min_count."
+  }
+}
+
+variable "aks_node_max_pods" {
+  description = "Maximum number of pods scheduled on each system node."
+  type        = number
+  default     = 110
+  nullable    = false
+
+  validation {
+    condition     = var.aks_node_max_pods >= 1 && var.aks_node_max_pods <= 250
+    error_message = "aks_node_max_pods must be between 1 and 250."
+  }
+}
+
+variable "aks_log_analytics_workspace_id" {
+  description = "Optional Log Analytics workspace resource ID. When supplied, AKS monitoring is enabled."
+  type        = string
+  default     = null
+  nullable    = true
+}
+
 variable "tags" {
   description = "Additional tags applied to resources managed by this configuration."
   type        = map(string)

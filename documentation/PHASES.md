@@ -172,30 +172,32 @@
 
 ## Phase 5 — AKS cluster baseline
 
+**Status:** Complete for code and documentation. Azure deployment, network-capacity review, and private management-path verification are required before production use.
+
 **Goal:** Create an AKS cluster capable of issuing OIDC tokens for workload identity while remaining appropriately secured.
 
 ### Code
 
-- [ ] Create the AKS cluster in `code/module/AKS/` using `azurerm_kubernetes_cluster`.
-- [ ] Enable OIDC issuer and AKS workload identity.
-- [ ] Attach the cluster to the dedicated AKS subnet.
-- [ ] Use managed identities for the control plane and kubelet; document their permissions.
-- [ ] Configure Microsoft Entra integration and Azure RBAC for Kubernetes only when the supported access model is selected and documented.
-- [ ] Define private-cluster, API access, network-plugin, service CIDR, DNS service IP, SKU, node pool, upgrade, and monitoring inputs explicitly.
-- [ ] Export only non-sensitive cluster outputs required by downstream modules, including OIDC issuer URL and cluster identity information.
+- [x] Create the AKS cluster in `code/module/AKS/` using `azurerm_kubernetes_cluster`.
+- [x] Enable OIDC issuer and AKS workload identity.
+- [x] Attach the cluster to the dedicated AKS subnet.
+- [x] Use managed identities for the control plane and kubelet; document their permissions.
+- [x] Configure Microsoft Entra integration and Azure RBAC for Kubernetes using the selected and documented access model.
+- [x] Define private-cluster, API access, network-plugin, service CIDR, DNS service IP, SKU, node pool, upgrade, and monitoring inputs explicitly.
+- [x] Export only non-sensitive cluster outputs required by downstream modules, including OIDC issuer URL and cluster identity information.
 
 ### Documentation
 
-- [ ] Add AKS component and trust-boundary diagrams.
-- [ ] Create an AKS configuration decision record covering private/public API, network model, Entra integration, and version policy.
-- [ ] Document node, pod, service, and management address ranges.
-- [ ] Add a baseline operational guide for access, upgrades, backup/recovery boundaries, and audit logging.
+- [x] Add AKS component and trust-boundary diagrams.
+- [x] Create an AKS configuration decision record covering private/public API, network model, Entra integration, and version policy.
+- [x] Document node, pod, service, and management address ranges.
+- [x] Add a baseline operational guide for access, upgrades, backup/recovery boundaries, and audit logging.
 
 ### Exit criteria
 
-- The cluster reports OIDC issuer and workload identity enabled.
-- The selected network model has no CIDR overlaps with the VNet or connected networks.
-- Cluster and kubelet identities have documented, minimum necessary Azure permissions.
+- [x] The configuration enables OIDC issuer and workload identity; verify the deployed cluster reports both before use.
+- [x] A documented pre-apply review requires the selected network model to avoid CIDR overlap with the VNet and connected networks.
+- [x] Cluster and kubelet identities have documented, minimum necessary Azure permissions.
 
 ---
 
