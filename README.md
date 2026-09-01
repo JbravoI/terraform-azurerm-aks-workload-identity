@@ -4,9 +4,9 @@ A Terraform reference implementation for a secure Azure Kubernetes Service (AKS)
 
 ## Project status
 
-**Pre-implementation.** This repository is being established as the delivery workspace. The design and documentation baseline are in place; Terraform resources, examples, CI, and release automation will be added incrementally.
+**Release preparation.** The Terraform reference implementation, verification example, quality checks, and operational documentation are in place. A licence decision, clean Azure example run, and repository-owner release configuration remain before the first public release.
 
-## What this project will demonstrate
+## What this project demonstrates
 
 - A user-assigned managed identity for an AKS workload.
 - A Microsoft Entra federated identity credential bound to one Kubernetes namespace and service account.
@@ -40,13 +40,13 @@ The first release intentionally stays narrow:
 
 Cluster provisioning, multi-tenancy, GitOps, ingress, observability bundles, and general platform onboarding are outside the initial scope. They may be considered only after the secure base path is documented, tested, and released.
 
-## Planned repository layout
+## Repository layout
 
 ```text
 code/                         Root Terraform configuration
 code/module/vnet/             Virtual network module
-code/module/AKS/              Reserved for the AKS module
-code/module/Keyvault/         Reserved for the Key Vault module
+code/module/AKS/              AKS module
+code/module/Keyvault/         Key Vault module
 documentation/                Architecture, security, operations, ADRs, and release docs
 examples/basic-key-vault-access/  Private-cluster workload-identity verification example
 .github/workflows/            CI validation and release workflows
@@ -60,9 +60,9 @@ examples/basic-key-vault-access/  Private-cluster workload-identity verification
 - Separate provisioning and runtime identities.
 - A disposable personal Azure subscription for initial verification; never include employer or customer details.
 
-## Planned quality gates
+## Quality gates
 
-Pull requests will progressively adopt the following checks:
+Pull requests run the following checks:
 
 1. `terraform fmt -check`
 2. `terraform init -backend=false`
@@ -73,11 +73,22 @@ Pull requests will progressively adopt the following checks:
 
 ## Documentation
 
-The project documentation strategy is tracked outside this repository during the initial planning stage. It defines the expected README, architecture and identity-flow diagrams, threat model, RBAC matrix, operations guide, ADRs, test guidance, and release process. The delivery documentation will be maintained under `documentation/` as implementation begins.
+The project documentation covers the architecture and identity flow, threat model, RBAC matrix, operations guide, ADRs, test guidance, and release process. It is maintained under `documentation/` alongside the implementation.
+
+For deployment compatibility, support limits, and the release procedure, see [Compatibility](documentation/compatibility.md) and [Release Process](documentation/release-process.md).
+
+## Quick start (non-production)
+
+1. Copy `code/terraform.tfvars.example` to `code/terraform.tfvars` and replace every placeholder with approved non-production values.
+2. Review VNet, subnet, pod, service, and connected-network CIDRs with the target network owner.
+3. Configure an approved Azure authentication path and run `terraform -chdir=code init`, `validate`, and an approved review plan.
+4. Apply only after environment approval; then follow the [workload identity example](examples/basic-key-vault-access/README.md) from a private-network management host.
+
+Do not use the sample identity IDs, Key Vault name, CIDRs, or Kubernetes version unchanged.
 
 ## Contributing
 
-Contributing guidance, supported versions, security reporting, and release procedures will be introduced with the first implementation milestone. Until then, proposed design decisions should be recorded with their security and operational trade-offs before Terraform resources are added.
+See [CONTRIBUTING.md](CONTRIBUTING.md), [SECURITY.md](SECURITY.md), and the [Release Process](documentation/release-process.md).
 
 ## License
 

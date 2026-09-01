@@ -291,21 +291,24 @@
 
 ## Phase 9 — Public release and operational readiness
 
+**Status:** In progress. Release documentation and automation are ready; licence selection, protected GitHub/Registry setup, and a clean external example run remain owner-controlled release gates.
+
 **Goal:** Publish a versioned, safe-to-consume module with sufficient operational and security information for external users.
 
 ### Code
 
-- [ ] Review and stabilise input/output contracts.
-- [ ] Add module outputs and generated input/output documentation where useful.
-- [ ] Add release automation, tags, and changelog generation/review process.
-- [ ] Create a clean-example validation run from a fresh checkout.
+- [x] Review and stabilise input/output contracts.
+- [x] Add module outputs and documented input/output contracts where useful.
+- [x] Add release automation, semantic tags, and changelog/review process.
+- [ ] Create a clean-example validation run from a fresh checkout in an approved Azure environment.
 - [ ] Publish `v0.1.0` after the narrow path works; publish `v1.0.0` only after all documented release criteria are met.
 
 ### Documentation
 
-- [ ] Finalise the README quick start, architecture diagram, compatibility matrix, and known limitations.
-- [ ] Add `CHANGELOG.md`, `SECURITY.md`, licence, and `documentation/release-process.md`.
-- [ ] Add incident/rollback and access-revocation runbooks.
+- [x] Finalise the README quick start, architecture diagram, compatibility matrix, and known limitations.
+- [x] Add `CHANGELOG.md`, `SECURITY.md`, and `documentation/release-process.md`.
+- [ ] Select and add a repository licence (owner-controlled legal decision).
+- [x] Add incident/rollback and access-revocation runbooks.
 - [ ] Review every public document for customer data, subscription/tenant IDs, tokens, secret values, internal IP ranges, and employer-specific material.
 - [ ] Publish a short technical article or walkthrough only after the repository is safe for public sharing.
 

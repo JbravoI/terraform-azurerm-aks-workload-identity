@@ -1,0 +1,56 @@
+name: Release validation and publication
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Validate and create release
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+      - name: Check out release tag
+        uses: actions/checkout@v4
+
+      - name: Validate semantic release tag
+        run: |
+          [[ "$GITHUB_REF_NAME" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]] || { echo "Tag must use vMAJOR.MINOR.PATCH." >&2; exit 1; }
+          test -f CHANGELOG.md
+          test -f SECURITY.md
+          test -f LICENSE || { echo "A repository licence is required before a release." >&2; exit 1; }
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v4
+        with:
+          terraform_version: "1.14.3"
+          terraform_wrapper: false
+
+      - name: Validate root configuration
+        run: |
+          terraform -chdir=code fmt -check -recursive
+          terraform -chdir=code init -backend=false -input=false
+          terraform -chdir=code validate
+
+      - name: Run module tests
+        run: |
+          for module in vnet Keyvault AKS; do
+            terraform -chdir="code/module/$module" init -backend=false -input=false
+            terraform -chdir="code/module/$module" test
+          done
+
+      - name: Build source archive
+        run: |
+          tar --exclude-vcs --exclude='.terraform' --exclude='*.tfstate*' --exclude='terraform.tfvars' -czf terraform-azurerm-aks-workload-identity.tar.gz .
+
+      - name: Create GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "$GITHUB_REF_NAME" terraform-azurerm-aks-workload-identity.tar.gz --generate-notes --title "$GITHUB_REF_NAME"
