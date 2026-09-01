@@ -107,12 +107,11 @@ resource "azurerm_kubernetes_cluster" "aks" {
 }
 
 resource "azurerm_federated_identity_credential" "workload" {
-  name                = "${var.name}-kv-fic"
-  resource_group_name = var.resource_group_name
-  audience            = ["api://AzureADTokenExchange"]
-  issuer              = azurerm_kubernetes_cluster.aks.oidc_issuer_url
-  parent_id           = azurerm_user_assigned_identity.workload.id
-  subject             = "system:serviceaccount:${var.workload_namespace}:${var.workload_service_account}"
+  name      = "${var.name}-kv-fic"
+  audience  = ["api://AzureADTokenExchange"]
+  issuer    = azurerm_kubernetes_cluster.aks.oidc_issuer_url
+  parent_id = azurerm_user_assigned_identity.workload.id
+  subject   = "system:serviceaccount:${var.workload_namespace}:${var.workload_service_account}"
 }
 
 # This grants secret read content only. It does not allow infrastructure

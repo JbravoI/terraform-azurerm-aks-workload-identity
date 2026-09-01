@@ -37,7 +37,7 @@ run "enforces_private_workload_identity_cluster" {
   }
 
   assert {
-    condition     = azurerm_federated_identity_credential.workload.subject == "system:serviceaccount:workload-identity:keyvault-reader" && azurerm_federated_identity_credential.workload.audience == ["api://AzureADTokenExchange"]
+    condition     = azurerm_federated_identity_credential.workload.subject == "system:serviceaccount:workload-identity:keyvault-reader" && length(azurerm_federated_identity_credential.workload.audience) == 1 && contains(azurerm_federated_identity_credential.workload.audience, "api://AzureADTokenExchange")
     error_message = "The federated credential must trust exactly the configured service account and token-exchange audience."
   }
 
