@@ -39,15 +39,7 @@ Kubernetes workload
   → Azure Key Vault (least-privilege RBAC)
 ```
 
-```mermaid
-flowchart LR
-    W[Kubernetes workload] --> SA[Kubernetes service account]
-    SA --> T[Projected service-account token]
-    T --> OIDC[AKS OIDC issuer]
-    OIDC --> FIC[Microsoft Entra federated identity credential]
-    FIC --> UAI[User-assigned managed identity]
-    UAI --> KV[Azure Key Vault: least-privilege RBAC]
-```
+![AKS Workload Identity architecture](documentation/architecture/workload-identity-overview.svg)
 
 The workload obtains short-lived tokens through workload identity. It does not use an Azure client secret to retrieve the Key Vault secret.
 

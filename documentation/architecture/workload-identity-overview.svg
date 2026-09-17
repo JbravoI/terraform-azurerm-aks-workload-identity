@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720" role="img" aria-labelledby="title desc">
+  <title id="title">AKS Workload Identity architecture</title>
+  <desc id="desc">A pod uses a Kubernetes service account. The service account has federated OIDC trust with a federated identity credential attached to a user-assigned managed identity, which accesses Azure Key Vault.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#2563eb"/>
+    </marker>
+    <marker id="trust-arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#7c3aed"/>
+    </marker>
+    <style>
+      .background { fill: #ffffff; }
+      .cluster { stroke-width: 2; rx: 18; ry: 18; }
+      .aks { fill: #eff6ff; stroke: #60a5fa; }
+      .entra { fill: #f5f3ff; stroke: #a78bfa; }
+      .azure { fill: #ecfdf5; stroke: #34d399; }
+      .heading { font: 700 20px Arial, sans-serif; fill: #1e293b; }
+      .node { stroke-width: 2; rx: 10; ry: 10; }
+      .node-aks { fill: #dbeafe; stroke: #2563eb; }
+      .node-entra { fill: #ede9fe; stroke: #7c3aed; }
+      .node-azure { fill: #d1fae5; stroke: #059669; }
+      .node-text { font: 600 16px Arial, sans-serif; fill: #172554; text-anchor: middle; }
+      .node-text-ent { fill: #3b0764; }
+      .node-text-az { fill: #064e3b; }
+      .label { font: 14px Arial, sans-serif; fill: #334155; text-anchor: middle; }
+      .line { fill: none; stroke: #2563eb; stroke-width: 2.5; marker-end: url(#arrow); }
+      .trust { fill: none; stroke: #7c3aed; stroke-width: 2.5; stroke-dasharray: 8 6; marker-end: url(#trust-arrow); }
+    </style>
+  </defs>
+
+  <rect class="background" width="1200" height="720"/>
+  <text x="600" y="42" text-anchor="middle" style="font:700 28px Arial,sans-serif;fill:#0f172a">AKS Workload Identity flow</text>
+
+  <rect class="cluster aks" x="60" y="100" width="360" height="500"/>
+  <text class="heading" x="85" y="135">AKS Cluster</text>
+  <rect class="node node-aks" x="120" y="205" width="240" height="80"/>
+  <text class="node-text" x="240" y="239">Pod with</text>
+  <text class="node-text" x="240" y="262">Workload Identity</text>
+  <rect class="node node-aks" x="120" y="420" width="240" height="80"/>
+  <text class="node-text" x="240" y="454">Kubernetes Service</text>
+  <text class="node-text" x="240" y="477">Account</text>
+  <path class="line" d="M240 285 L240 418"/>
+  <text class="label" x="276" y="355">Uses</text>
+
+  <rect class="cluster entra" x="470" y="100" width="360" height="500"/>
+  <text class="heading" x="495" y="135">Microsoft Entra ID</text>
+  <rect class="node node-entra" x="530" y="205" width="240" height="80"/>
+  <text class="node-text node-text-ent" x="650" y="239">User-Assigned</text>
+  <text class="node-text node-text-ent" x="650" y="262">Managed Identity</text>
+  <rect class="node node-entra" x="530" y="420" width="240" height="80"/>
+  <text class="node-text node-text-ent" x="650" y="454">Federated Identity</text>
+  <text class="node-text node-text-ent" x="650" y="477">Credential</text>
+  <path class="trust" d="M650 285 L650 418"/>
+
+  <rect class="cluster azure" x="880" y="100" width="260" height="500"/>
+  <text class="heading" x="905" y="135">Azure Resources</text>
+  <rect class="node node-azure" x="920" y="310" width="180" height="90"/>
+  <text class="node-text node-text-az" x="1010" y="346">Key Vault /</text>
+  <text class="node-text node-text-az" x="1010" y="369">Azure Resource</text>
+
+  <path class="trust" d="M360 460 C420 560, 470 560, 530 460"/>
+  <text class="label" x="446" y="565" fill="#6d28d9">Federated Trust (OIDC)</text>
+  <path class="line" d="M360 245 C425 245, 470 245, 528 245"/>
+  <text class="label" x="445" y="225">Exchanges token</text>
+  <path class="line" d="M770 245 C835 245, 855 355, 918 355"/>
+  <text class="label" x="840" y="275">Accesses</text>
+</svg>
