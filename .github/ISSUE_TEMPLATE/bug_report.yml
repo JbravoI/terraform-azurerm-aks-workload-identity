@@ -1,0 +1,29 @@
+name: Bug report
+description: Report a reproducible problem without sensitive environment data.
+title: "[Bug]: "
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: "Do not include secrets, tokens, tenant/subscription IDs, customer data, private IP ranges, or unredacted plans/logs."
+  - type: textarea
+    id: summary
+    attributes:
+      label: What happened?
+      description: Describe the observed and expected behaviour.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Safe reproduction steps
+      description: Provide minimal, redacted steps.
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Include project version, Terraform version, AzureRM provider version, and redacted error output.
+    validations:
+      required: true

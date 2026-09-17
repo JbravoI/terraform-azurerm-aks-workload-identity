@@ -88,8 +88,8 @@ Do not use the sample identity IDs, Key Vault name, CIDRs, or Kubernetes version
 
 ## Contributing
 
-See [CONTRIBUTING.md](CONTRIBUTING.md), [SECURITY.md](SECURITY.md), and the [Release Process](documentation/release-process.md).
+See [CONTRIBUTING.md](CONTRIBUTING.md), [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md), [SUPPORT.md](SUPPORT.md), [SECURITY.md](SECURITY.md), and the [Release Process](documentation/release-process.md).
 
 ## License
 
-License selection is pending before the first public release.
+This project is licensed under the [Apache License 2.0](LICENSE).

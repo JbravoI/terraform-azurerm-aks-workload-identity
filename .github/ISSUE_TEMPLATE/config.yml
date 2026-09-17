@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Usage question or discussion
+    url: https://github.com/JbravoI/terraform-azurerm-aks-workload-identity/discussions
+    about: Ask non-sensitive usage and design questions in Discussions.
+  - name: Security vulnerability
+    url: https://github.com/JbravoI/terraform-azurerm-aks-workload-identity/security/advisories/new
+    about: Report vulnerabilities privately; do not create a public issue.
