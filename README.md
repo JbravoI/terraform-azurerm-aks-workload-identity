@@ -142,6 +142,13 @@ before deployment.
 
 See [CONTRIBUTING.md](CONTRIBUTING.md), [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md), [SUPPORT.md](SUPPORT.md), [SECURITY.md](SECURITY.md), and the [Release Process](documentation/release-process.md).
 
+## Maintainer
+
+Created and maintained by [@JbravoI](https://github.com/JbravoI). Follow the
+project on GitHub for releases and use [Discussions](https://github.com/JbravoI/terraform-azurerm-aks-workload-identity/discussions)
+for non-sensitive questions and feedback. See [AUTHORS.md](AUTHORS.md) for
+contributor recognition.
+
 ## License
 
 This project is licensed under the [Apache License 2.0](LICENSE).
