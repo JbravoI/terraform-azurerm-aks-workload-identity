@@ -7,7 +7,8 @@
 3. Review inputs, outputs, compatibility notes, known limitations, ADRs, RBAC matrix, threat model, and operations guides for accuracy.
 4. Review `CHANGELOG.md`; move releasable changes from **Unreleased** into the proposed version section.
 5. Confirm no source, plan, artifact, screenshot, example, or documentation contains secrets, tokens, customer data, real subscription/tenant IDs, or internal network details.
-6. Confirm a licence is selected and approved by the repository owner.
+6. Confirm the Apache License 2.0 remains appropriate for the repository's
+   source and contributions.
 7. Confirm the target AzureRM provider version is represented by the committed root lock file.
 
 ## Versioning

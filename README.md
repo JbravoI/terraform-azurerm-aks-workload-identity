@@ -4,7 +4,20 @@ A Terraform reference implementation for a secure Azure Kubernetes Service (AKS)
 
 ## Project status
 
-**Release preparation.** The Terraform reference implementation, verification example, quality checks, and operational documentation are in place. A licence decision, clean Azure example run, and repository-owner release configuration remain before the first public release.
+**Release preparation.** The Terraform reference implementation, verification example, quality checks, and operational documentation are in place. A clean Azure example run and repository-owner release configuration remain before the first public release.
+
+## Why use this?
+
+Use this reference implementation when an AKS workload needs to read Azure Key
+Vault secrets without a stored Azure client secret. It gives you a deliberately
+narrow, reviewable baseline for private AKS networking, Microsoft Entra
+Workload Identity, and Key Vault RBAC. The repository includes Terraform,
+automated checks, a threat model, operations guidance, and a verification
+example that does not print secret plaintext.
+
+It is a reference implementation, not a complete landing zone or multi-tenant
+platform. Review the [support boundary and known limitations](documentation/compatibility.md)
+before using it.
 
 ## What this project demonstrates
 
@@ -24,6 +37,16 @@ Kubernetes workload
   → Microsoft Entra federated identity credential
   → User-assigned managed identity
   → Azure Key Vault (least-privilege RBAC)
+```
+
+```mermaid
+flowchart LR
+    W[Kubernetes workload] --> SA[Kubernetes service account]
+    SA --> T[Projected service-account token]
+    T --> OIDC[AKS OIDC issuer]
+    OIDC --> FIC[Microsoft Entra federated identity credential]
+    FIC --> UAI[User-assigned managed identity]
+    UAI --> KV[Azure Key Vault: least-privilege RBAC]
 ```
 
 The workload obtains short-lived tokens through workload identity. It does not use an Azure client secret to retrieve the Key Vault secret.
@@ -77,6 +100,19 @@ The project documentation covers the architecture and identity flow, threat mode
 
 For deployment compatibility, support limits, and the release procedure, see [Compatibility](documentation/compatibility.md) and [Release Process](documentation/release-process.md).
 
+## Prerequisites
+
+- Terraform `>= 1.14.3` and an AzureRM provider version within the supported
+  range; see [Compatibility](documentation/compatibility.md).
+- An approved, disposable non-production Azure subscription and an existing
+  resource group in the intended Azure region.
+- Azure CLI authentication with only the permissions approved for the target
+  environment. Do not use a client secret for the runtime workload.
+- A private-network management host with DNS and network access to the private
+  AKS API and Key Vault endpoint for the verification example.
+- Approved non-overlapping VNet, AKS subnet, private-endpoint subnet, pod, and
+  service CIDRs; plus a Microsoft Entra group object ID for AKS administrators.
+
 ## Quick start (non-production)
 
 1. Copy `code/terraform.tfvars.example` to `code/terraform.tfvars` and replace every placeholder with approved non-production values.
@@ -85,6 +121,25 @@ For deployment compatibility, support limits, and the release procedure, see [Co
 4. Apply only after environment approval; then follow the [workload identity example](examples/basic-key-vault-access/README.md) from a private-network management host.
 
 Do not use the sample identity IDs, Key Vault name, CIDRs, or Kubernetes version unchanged.
+
+## Cost and cleanup
+
+AKS, private endpoints, networking, and supporting Azure resources can incur
+charges. Review Azure pricing and your organisation's cost controls before
+applying. The example cleanup script removes only its Kubernetes namespace; it
+does not remove the AKS cluster, Key Vault, private endpoint, VNet, federated
+credential, workload identity, or the verification secret. See the
+[example cleanup instructions](examples/basic-key-vault-access/README.md#5-cleanup)
+and [incident and rollback runbook](documentation/operations/incident-and-rollback.md).
+
+## Limitations
+
+This first release supports one AKS cluster, one namespace/service-account
+trust subject, and one Key Vault secret-read path. It does not provide a
+landing zone, multi-tenancy, existing-VNet/Key-Vault integration, central
+private DNS ownership, GitOps, dashboards, alerts, or a remote Terraform
+backend. Read the full [compatibility and support boundary](documentation/compatibility.md)
+before deployment.
 
 ## Contributing
 
