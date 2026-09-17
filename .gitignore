@@ -11,3 +11,5 @@ crash.*.log
 *.tfvars.example
 .terraform.lock.hcl
 OPEN_SOURCE_LAUNCH.md
+documentation/releases/v0.1.0.md
+documentation/release-process.md
