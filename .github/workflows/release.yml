@@ -48,9 +48,11 @@ jobs:
 
       - name: Build source archive
         run: |
-          tar --exclude-vcs --exclude='.terraform' --exclude='*.tfstate*' --exclude='terraform.tfvars' -czf terraform-azurerm-aks-workload-identity.tar.gz .
+          archive="$RUNNER_TEMP/terraform-azurerm-aks-workload-identity.tar.gz"
+          tar --exclude-vcs --exclude='.terraform' --exclude='*.tfstate*' --exclude='terraform.tfvars' -czf "$archive" .
+          echo "RELEASE_ARCHIVE=$archive" >> "$GITHUB_ENV"
 
       - name: Create GitHub release
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh release create "$GITHUB_REF_NAME" terraform-azurerm-aks-workload-identity.tar.gz --generate-notes --title "$GITHUB_REF_NAME"
+        run: gh release create "$GITHUB_REF_NAME" "$RELEASE_ARCHIVE" --generate-notes --title "$GITHUB_REF_NAME"
