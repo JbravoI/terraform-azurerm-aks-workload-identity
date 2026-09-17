@@ -1,5 +1,10 @@
 # Terraform AKS Workload Identity
 
+[![Terraform quality](https://github.com/JbravoI/terraform-azurerm-aks-workload-identity/actions/workflows/quality.yml/badge.svg?branch=main)](https://github.com/JbravoI/terraform-azurerm-aks-workload-identity/actions/workflows/quality.yml)
+[![Latest release](https://img.shields.io/github/v/release/JbravoI/terraform-azurerm-aks-workload-identity?display_name=tag&sort=semver)](https://github.com/JbravoI/terraform-azurerm-aks-workload-identity/releases)
+[![License](https://img.shields.io/github/license/JbravoI/terraform-azurerm-aks-workload-identity)](LICENSE)
+[![Terraform baseline](https://img.shields.io/badge/Terraform-%3E%3D%201.14.3-7B42BC?logo=terraform&logoColor=white)](documentation/compatibility.md)
+
 A Terraform reference implementation for a secure Azure Kubernetes Service (AKS) workload-identity pattern. It provisions and configures the Azure identity relationship that lets a Kubernetes workload access Azure Key Vault without storing a long-lived Azure client secret in the application, Kubernetes manifests, or CI/CD secrets.
 
 ## Project status
